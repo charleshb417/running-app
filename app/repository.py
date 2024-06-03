@@ -38,6 +38,7 @@ class WorkoutRepository(BaseRepository):
     def create(self, obj: schemas.WorkoutCreate):
         db_workout = models.Workout(
             run_type=obj.run_type,
+            timestamp=obj.timestamp,
             distance_in_mi=obj.distance_in_mi,
             duration_in_ms=obj.duration_in_ms,
             avg_heart_rate=obj.avg_heart_rate,
