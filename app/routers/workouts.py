@@ -14,11 +14,11 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[Workout])
-async def read_workouts(db: Session = Depends(get_db)):
+async def list_workouts(db: Session = Depends(get_db)):
     workouts = WorkoutRepository(db).list()
     return workouts
 
 
 @router.post("/", response_model=Workout)
-def create_user(workout: WorkoutCreate, db: Session = Depends(get_db)):
+def create_workout(workout: WorkoutCreate, db: Session = Depends(get_db)):
     return WorkoutRepository(db).create(workout)
