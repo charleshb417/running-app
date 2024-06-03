@@ -14,6 +14,10 @@ class WorkoutCreate(WorkoutBase):
     pass
 
 
+class WorkoutUpdate(WorkoutBase):
+    pass
+
+
 class Workout(WorkoutBase):
     id: int
 

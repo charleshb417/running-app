@@ -50,9 +50,16 @@ class WorkoutRepository(BaseRepository):
         return db_workout
 
     def update(self, id: int, obj):
-        # TO DO
-        pass
+        db_workout = self.get(id)
+        if db_workout:
+            for attr, value in obj.dict(exclude_unset=True).items():
+                setattr(db_workout, attr, value)
+            self.db.commit()
+            self.db.refresh(db_workout)
+            return db_workout
 
     def delete(self, id: int):
-        # TO DO
-        pass
+        workout = self.get(id)
+        if workout:
+            self.db.delete(workout)
+            self.db.commit()
