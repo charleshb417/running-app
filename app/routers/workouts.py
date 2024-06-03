@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.dependencies import get_db
-from app.repository import WorkoutRepository
+from app.repositories import WorkoutRepository
 from app.schemas import Workout, WorkoutCreate
 
 router = APIRouter(
