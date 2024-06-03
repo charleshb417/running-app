@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app import models, schemas
 
+
 class BaseRepository(ABC):
     def __init__(self, db: Session):
         self.db = db
