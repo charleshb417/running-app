@@ -1,14 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.templating import Jinja2Templates
+
 from sqlalchemy.orm import Session
 
-from app.dependencies import get_db
+from app.dependencies import get_db, get_templates
 from app.repositories import WorkoutRepository
 from app.schemas import Workout, WorkoutCreate, WorkoutUpdate
 
 router = APIRouter(
     prefix="/workouts",
     tags=["workouts"],
-    dependencies=[Depends(get_db)],
+    dependencies=[Depends(get_db), Depends(get_templates)],
     responses={404: {"description": "Not found"}},
 )
 
@@ -27,8 +29,19 @@ def read_workout(workout_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=list[Workout])
-async def list_workouts(db: Session = Depends(get_db)):
+async def list_workouts(
+    request: Request,
+    db: Session = Depends(get_db),
+    templates: Jinja2Templates = Depends(get_templates),
+):
     workouts = WorkoutRepository(db).list()
+
+    accept = request.headers.get("accept")
+    if "text/html" in accept:
+        return templates.TemplateResponse(
+            "workouts.html", {"request": request, "workouts": workouts}
+        )
+
     return workouts
 
 

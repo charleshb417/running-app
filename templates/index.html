@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workouts</title>
+    <script src="https://unpkg.com/htmx.org@1.4.1"></script>
+</head>
+<body>
+    <h1>Workouts</h1>
+    <button
+            hx-get="/workouts"
+            hx-trigger="click"
+            hx-target="#workout-table-body"
+            hx-headers='{"Accept": "text/html"}'
+    >Load Workouts</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Foo</th>
+                <th>Baz</th>
+            </tr>
+        </thead>
+        <tbody id="workout-table-body">
+            <!-- Data will be inserted here by HTMX -->
+        </tbody>
+    </table>
+</body>
+</html>

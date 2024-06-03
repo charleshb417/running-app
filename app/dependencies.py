@@ -1,4 +1,7 @@
 from app.database import SessionLocal
+from fastapi.templating import Jinja2Templates
+
+templates = Jinja2Templates(directory="templates")
 
 
 def get_db():
@@ -7,3 +10,7 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+def get_templates():
+    return templates
