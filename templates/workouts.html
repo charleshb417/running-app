@@ -1,0 +1,9 @@
+{% for workout in workouts %}
+<tr>
+    <td>{{ workout.timestamp.strftime('%m/%d/%Y %H:%M:%S')  }}</td>
+    <td>{{ workout.run_type }}</td>
+    <td>{{ workout.distance_in_mi }}</td>
+    <td>{{ workout.duration_in_ms | durationformat }}</td>
+    <td>{{ workout.avg_heart_rate }}</td>
+</tr>
+{% endfor %}

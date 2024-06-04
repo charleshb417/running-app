@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workouts</title>
+    <script src="/static/js/htmx.min.js"></script>
+</head>
+<body>
+    <h1>Workouts</h1>
+    <form id="add-workout-form" hx-post="/workouts" hx-target="#workout-table-body" hx-swap="beforeend" hx-headers='{"Accept": "text/html"}'>
+        <input type="datetime-local" name="timestamp" required>
+        <input type="text" name="run_type" placeholder="Run Type" required>
+        <input type="number" step="0.01" name="distance_in_mi" placeholder="Distance (Mi)" required>
+        <input type="number" name="duration_in_ms" placeholder="Duration (ms)" required>
+        <input type="number" name="avg_heart_rate" placeholder="Average Heart Rate" required>
+        <button type="submit">Add Workout</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Run Type</th>
+                <th>Distance (Mi)</th>
+                <th>Duration</th>
+                <th>Average Heart Rate</th>
+            </tr>
+        </thead>
+        <tbody id="workout-table-body">
+            {% include "workouts.html" %}
+        </tbody>
+    </table>
+</body>
+</html>
