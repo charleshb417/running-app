@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
@@ -10,8 +11,9 @@ from app.repositories import WorkoutRepository
 from app.routers import workouts
 
 Base.metadata.create_all(bind=engine)
-app = FastAPI()
 
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(workouts.router)
 
 
