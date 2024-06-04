@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from datetime import datetime
+
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.templating import Jinja2Templates
 
 from sqlalchemy.orm import Session
@@ -16,8 +18,33 @@ router = APIRouter(
 
 
 @router.post("/", response_model=Workout)
-def create_workout(workout: WorkoutCreate, db: Session = Depends(get_db)):
-    return WorkoutRepository(db).create(workout)
+def create_workout(
+    request: Request,
+    timestamp: datetime = Form(...),
+    run_type: str = Form(...),
+    distance_in_mi: float = Form(...),
+    duration_in_ms: int = Form(...),
+    avg_heart_rate: int = Form(...),
+    db: Session = Depends(get_db),
+    templates: Jinja2Templates = Depends(get_templates),
+):
+    workout_data = WorkoutCreate(
+        timestamp=timestamp,
+        run_type=run_type,
+        distance_in_mi=distance_in_mi,
+        duration_in_ms=duration_in_ms,
+        avg_heart_rate=avg_heart_rate,
+    )
+
+    new_workout = WorkoutRepository(db).create(workout_data)
+
+    accept = request.headers.get("accept")
+    if "text/html" in accept:
+        return templates.TemplateResponse(
+            "workouts.html", {"request": request, "workouts": [new_workout]}
+        )
+
+    return new_workout
 
 
 @router.get("/{workout_id}", response_model=Workout)
