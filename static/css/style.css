@@ -1,0 +1,13 @@
+.column-container {
+    display: flex;
+}
+.data-column {
+    width: 55%;
+}
+.chart-column {
+    width: 45%;
+}
+.chart-container canvas {
+    height: 50px; /* Optional: full container height */
+}
+

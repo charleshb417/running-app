@@ -1,0 +1,61 @@
+<div class="chart-container">
+  <canvas id="pace-chart"></canvas>
+  <canvas id="heart-chart"></canvas>
+</div>
+
+<script>
+  const labels = {{ chart_data.labels | tojson }};
+
+  const ctx_pace = document.getElementById('pace-chart');
+  const ctx_heart = document.getElementById('heart-chart');
+
+  const data_pace = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Avg Pace (MPH)',
+        data: {{ chart_data.pace }},
+        fill: false,
+        borderColor: 'rgb(75, 192, 75)',
+        tension: 0.1,
+      },
+    ]
+  };
+
+  const data_heart = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Avg Heartrate (BPM)',
+        data: {{ chart_data.heartrate }},
+        fill: false,
+        borderColor: 'rgb(192, 75, 75)',
+        tension: 0.1,
+      },
+    ]
+  };
+
+  new Chart(ctx_pace, {
+    type: 'line',
+    data: data_pace,
+    options: {
+    scales: {
+      y: {
+        max: 10
+      }
+    }
+  }
+  });
+
+  new Chart(ctx_heart, {
+    type: 'line',
+    data: data_heart,
+    options: {
+    scales: {
+      y: {
+        max: 220
+      }
+    }
+  }
+  });
+</script>
