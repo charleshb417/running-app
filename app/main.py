@@ -27,7 +27,7 @@ async def read_root(
 
     chart_data = {"labels": [], "pace": [], "heartrate": []}
     for db_workout in db_workouts:
-        pace = (db_workout.duration_in_ms / db_workout.distance_in_mi) / 60000
+        pace = db_workout.distance_in_mi / (db_workout.duration_in_ms / 3600000)
 
         chart_data["labels"].append(db_workout.timestamp.strftime("%m/%d/%Y"))
         chart_data["pace"].append(pace)
