@@ -24,6 +24,16 @@ async def read_root(
     db: Session = Depends(get_db),
 ):
     db_workouts = WorkoutRepository(db).list()
+
+    chart_data = {"labels": [], "pace": [], "heartrate": []}
+    for db_workout in db_workouts:
+        pace = (db_workout.duration_in_ms / db_workout.distance_in_mi) / 60000
+
+        chart_data["labels"].append(db_workout.timestamp.strftime("%m/%d/%Y"))
+        chart_data["pace"].append(pace)
+        chart_data["heartrate"].append(db_workout.avg_heart_rate)
+
     return templates.TemplateResponse(
-        "index.html", {"request": request, "workouts": db_workouts}
+        "index.html",
+        {"request": request, "workouts": db_workouts, "chart_data": chart_data},
     )

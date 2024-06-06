@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Workouts</title>
     <script src="/static/js/htmx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <h1>Workouts</h1>
@@ -15,19 +17,26 @@
         <input type="number" name="avg_heart_rate" placeholder="Average Heart Rate" required>
         <button type="submit">Add Workout</button>
     </form>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Run Type</th>
-                <th>Distance (Mi)</th>
-                <th>Duration</th>
-                <th>Average Heart Rate</th>
-            </tr>
-        </thead>
-        <tbody id="workout-table-body">
-            {% include "workouts.html" %}
-        </tbody>
-    </table>
+    <div id="workout-table-body" class="column-container">
+        <div class="chart-column">
+            {% include "chart.html" %}
+        </div>
+        <div class="data-column">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Run Type</th>
+                        <th>Distance (Mi)</th>
+                        <th>Duration</th>
+                        <th>Average Heart Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% include "workouts.html" %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
