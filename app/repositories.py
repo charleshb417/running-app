@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from sqlalchemy import asc
 from sqlalchemy.orm import Session
 
 from app import models, schemas
@@ -34,7 +35,13 @@ class WorkoutRepository(BaseRepository):
         return self.db.query(models.Workout).filter(models.Workout.id == id).first()
 
     def list(self, skip: int = 0, limit: int = 100) -> list[schemas.Workout]:
-        return self.db.query(models.Workout).offset(skip).limit(limit).all()
+        return (
+            self.db.query(models.Workout)
+            .order_by(asc(models.Workout.timestamp))
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
     def create(self, obj: schemas.WorkoutCreate):
         db_workout = models.Workout(

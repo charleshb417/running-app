@@ -41,7 +41,7 @@
     options: {
     scales: {
       y: {
-        max: 10
+        max: Math.max(...{{ chart_data.pace }}) * 1.05
       }
     }
   }
