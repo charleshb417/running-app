@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Workouts</h1>
-    <form id="add-workout-form" hx-post="/workouts" hx-target="#workout-table-body" hx-swap="beforeend" hx-headers='{"Accept": "text/html"}'>
+    <form id="add-workout-form" hx-post="/workouts" hx-target="#workout-table-body tbody" hx-swap="beforeend" hx-headers='{"Accept": "text/html"}'>
         <input type="datetime-local" name="timestamp" required>
         <input type="text" name="run_type" placeholder="Run Type" required>
         <input type="number" step="0.01" name="distance_in_mi" placeholder="Distance (Mi)" required>
